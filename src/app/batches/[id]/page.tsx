@@ -20,8 +20,12 @@ const EditBatchPage = () => {
       try {
         const response = await axios.get(`/api/batches/${id}`);
         setBatch(response.data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err) {
+        if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("An unknown error occurred");
+        }
       } finally {
         setLoading(false);
       }
@@ -42,8 +46,12 @@ const EditBatchPage = () => {
       console.log('batch', batch);
       await axios.put(`/api/batches/${id}`, batch);
       router.push("/batches"); // Redirect ke halaman daftar siswa
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err) {
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("An unknown error occurred");
+      }
     }
   };
 
