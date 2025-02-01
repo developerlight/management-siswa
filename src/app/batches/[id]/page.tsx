@@ -5,8 +5,12 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useParams } from "next/navigation";
 
+interface Batch {
+  year: number;
+};
+
 const EditBatchPage = () => {
-  const [batch, setBatch] = useState<any>({
+  const [batch, setBatch] = useState<Batch>({
     year: 0,
   });
   const [loading, setLoading] = useState(true);
