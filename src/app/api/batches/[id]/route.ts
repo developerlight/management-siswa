@@ -6,7 +6,7 @@ export async function GET(request: Request, { params }: { params: { id: string  
     const { id } = params;
     const { data, error } = await supabase.from('batches').select('year').eq('id', id).single();
     if (error) {
-        return NextResponse.json({ error: error.message }, { status: 500 });
+        return NextResponse.json({ error: (error as Error).message }, { status: 500 });
     }
     return NextResponse.json(data);
 }
@@ -23,7 +23,7 @@ export async function PUT(request: Request, { params }: { params: { id: string  
         .eq("id", id);
   
       if (error) {
-        throw new Error(error.message);
+        throw new Error((error as Error).message);
       }
   
       return NextResponse.json(data);
