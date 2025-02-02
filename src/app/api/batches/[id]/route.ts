@@ -4,10 +4,10 @@ import { NextResponse, NextRequest } from "next/server";
 // GET by ID: Mengambil data mahasiswa berdasarkan ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: Record<string, string> }
+  context: { params?: { id?: string } }
 ) {
   try {
-    const id = params.id;
+    const id = context.params?.id;
     if (!id) {
       return NextResponse.json(
         { error: "ID tidak ditemukan" },
@@ -37,10 +37,10 @@ export async function GET(
 // PUT: Mengupdate data siswa
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Record<string, string> }
+  context: { params?: { id?: string } }
 ) {
   try {
-    const id = params.id;
+    const id = context.params?.id;
     if (!id) {
       return NextResponse.json(
         { error: "ID tidak ditemukan" },
