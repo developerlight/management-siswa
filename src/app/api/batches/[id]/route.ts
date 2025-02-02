@@ -1,13 +1,22 @@
 import { supabase } from "@/app/lib/supabase";
 import { NextResponse, NextRequest } from "next/server";
 
+type Params = {
+  id: object;
+};
+
+type RouteContext = {
+  params: Params;
+};
+
 // GET by ID: Mengambil data mahasiswa berdasarkan ID
 export async function GET(
   request: NextRequest,
-  { params }: { params: Record<string, string> }
-) {
+  context: RouteContext
+): Promise<NextResponse> {
   try {
-    const id = params.id;
+    console.log(`params`, context.params, 'tipe', typeof context.params);
+    const { id } = await context.params;
     if (!id) {
       return NextResponse.json(
         { error: "ID tidak ditemukan" },
@@ -37,10 +46,10 @@ export async function GET(
 // PUT: Mengupdate data siswa
 export async function PUT(
   request: NextRequest,
-  { params }: { params: Record<string, string> }
-) {
+  { params }: RouteContext
+): Promise<NextResponse> {
   try {
-    const id = params.id;
+    const {id} = await params;
     if (!id) {
       return NextResponse.json(
         { error: "ID tidak ditemukan" },
@@ -49,10 +58,18 @@ export async function PUT(
     }
     const { year } = await request.json();
 
+    if (!year) {
+      return NextResponse.json(
+        { error: "Tahun tidak ditemukan" },
+        { status: 400 }
+      );
+    }
+
     const { data, error } = await supabase
       .from("batches")
       .update({ year })
-      .eq("id", id);
+      .eq("id", id)
+      .single();
 
     if (error) {
       throw new Error((error as Error).message);
