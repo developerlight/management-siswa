@@ -16,8 +16,9 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     const { id } = await context.params;
-    console.log('context.params', context.params)
-    console.log('context', context)
+    // console.log('context.params', context.params)
+    // console.log('context', context)
+    // console.log('request', request)
     if (!id) {
       return NextResponse.json(
         { error: "ID tidak ditemukan" },
