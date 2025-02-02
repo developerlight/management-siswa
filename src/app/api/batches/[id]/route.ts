@@ -6,7 +6,7 @@ type Params = {
 };
 
 type RouteContext = {
-  params: Params;
+  params: Promise<Params>;
 };
 
 // GET by ID: Mengambil data mahasiswa berdasarkan ID
@@ -16,6 +16,8 @@ export async function GET(
 ): Promise<NextResponse> {
   try {
     const { id } = await context.params;
+    console.log('context.params', context.params)
+    console.log('context', context)
     if (!id) {
       return NextResponse.json(
         { error: "ID tidak ditemukan" },
