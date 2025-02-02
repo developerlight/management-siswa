@@ -2,7 +2,7 @@ import { supabase } from "@/app/lib/supabase";
 import { NextResponse, NextRequest } from "next/server";
 
 type Params = {
-  id: object;
+  id: string;
 };
 
 type RouteContext = {
@@ -15,7 +15,6 @@ export async function GET(
   context: RouteContext
 ): Promise<NextResponse> {
   try {
-    console.log(`params`, context.params, 'tipe', typeof context.params);
     const { id } = await context.params;
     if (!id) {
       return NextResponse.json(
